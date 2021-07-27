@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>首页二</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="../css/font-awesome-4.7.0/css/font-awesome.css" media="all">
+    <link rel="stylesheet" href="../css/publicw.css" media="all">
+    <style>
+        .layui-card {border:1px solid #f2f2f2;border-radius:5px;}
+        .icon {margin-right:10px;color:#1aa094;}
+        .icon-cray {color:#ffb800!important;}
+        .icon-blue {color:#1e9fff!important;}
+        .icon-tip {color:#ff5722!important;}
+        .layuimini-qiuck-module {text-align:center;margin-top: 10px}
+        .layuimini-qiuck-module a i {display:inline-block;width:100%;height:60px;line-height:60px;text-align:center;border-radius:2px;font-size:30px;background-color:#F8F8F8;color:#333;transition:all .3s;-webkit-transition:all .3s;}
+        .layuimini-qiuck-module a cite {position:relative;top:2px;display:block;color:#666;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;font-size:14px;}
+        .welcome-module {width:100%;height:210px;}
+        .panel {background-color:#fff;border:1px solid transparent;border-radius:3px;-webkit-box-shadow:0 1px 1px rgba(0,0,0,.05);box-shadow:0 1px 1px rgba(0,0,0,.05)}
+        .panel-body {padding:10px}
+        .panel-title {margin-top:0;margin-bottom:0;font-size:12px;color:inherit}
+        .label {display:inline;padding:.2em .6em .3em;font-size:75%;font-weight:700;line-height:1;color:#fff;text-align:center;white-space:nowrap;vertical-align:baseline;border-radius:.25em;margin-top: .3em;}
+        .layui-red {color:red}
+        .main_btn > p {height:40px;}
+        .layui-bg-number {background-color:#F8F8F8;}
+        .layuimini-notice:hover {background:#f6f6f6;}
+        .layuimini-notice {padding:7px 16px;clear:both;font-size:12px !important;cursor:pointer;position:relative;transition:background 0.2s ease-in-out;}
+        .layuimini-notice-title,.layuimini-notice-label {
+            padding-right: 70px !important;text-overflow:ellipsis!important;overflow:hidden!important;white-space:nowrap!important;}
+        .layuimini-notice-title {line-height:28px;font-size:14px;}
+        .layuimini-notice-extra {position:absolute;top:50%;margin-top:-8px;right:16px;display:inline-block;height:16px;color:#999;}
+    </style>
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <div class="layui-row layui-col-space15">
+            <div class="layui-col-md8">
+                <div class="layui-row layui-col-space15">
+                    <div class="layui-col-md6">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-warning icon"></i>数据统计</div>
+                            <div class="layui-card-body">
+                                <div class="welcome-module">
+                                    <div class="layui-row layui-col-space10">
+                                        <div class="layui-col-xs6">
+                                            <div class="panel layui-bg-number">
+                                                <div class="panel-body">
+                                                    <div class="panel-title">
+                                                        <span class="label pull-right layui-bg-blue">实时</span>
+                                                        <h5>用户统计</h5>
+                                                    </div>
+                                                    <div class="panel-content">
+                                                        <h1 class="no-margins">1234</h1>
+                                                        <small>当前分类总记录数</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="layui-col-xs6">
+                                            <div class="panel layui-bg-number">
+                                                <div class="panel-body">
+                                                    <div class="panel-title">
+                                                        <span class="label pull-right layui-bg-cyan">实时</span>
+                                                        <h5>英雄统计</h5>
+                                                    </div>
+                                                    <div class="panel-content">
+                                                        <h1 class="no-margins">1234</h1>
+                                                        <small>当前分类总记录数</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="layui-col-xs6">
+                                            <div class="panel layui-bg-number">
+                                                <div class="panel-body">
+                                                    <div class="panel-title">
+                                                        <span class="label pull-right layui-bg-orange">实时</span>
+                                                        <h5>最高段位</h5>
+                                                    </div>
+                                                    <div class="panel-content">
+                                                        <h1 class="no-margins" style="color: red;font-size: 19px;">最强王者</h1>
+                                                        <small>当前分类总记录数</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="layui-col-xs6">
+                                            <div class="panel layui-bg-number">
+                                                <div class="panel-body">
+                                                    <div class="panel-title">
+                                                        <span class="label pull-right layui-bg-green">实时</span>
+                                                        <h5>巅峰第一</h5>
+                                                    </div>
+                                                    <div class="panel-content">
+                                                        <h1 class="no-margins">1234</h1>
+                                                        <small>当前分类总记录数</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-col-md6">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-credit-card icon icon-blue"></i>快捷入口</div>
+                            <div class="layui-card-body">
+                                <div class="welcome-module">
+                                    <div class="layui-row layui-col-space10 layuimini-qiuck">
+                                        <div class="layui-col-xs3 layuimini-qiuck-module">
+                                            <a href="https://pvp.qq.com/" layuimini-content-href="page/menu.html" data-title="菜单管理" data-icon="fa fa-window-maximize">
+                                                <i class="fa fa-window-maximize"></i>
+                                                <cite>王者官网</cite>
+                                            </a>
+                                        </div>
+                                        <div class="layui-col-xs3 layuimini-qiuck-module">
+                                            <a href="https://pvp.qq.com/strategy/" layuimini-content-href="page/setting.html" data-title="系统设置" data-icon="fa fa-gears">
+                                                <i class="fa fa-gears"></i>
+                                                <cite>英雄资料</cite>
+                                            </a>
+                                        </div>
+                                        <div class="layui-col-xs3 layuimini-qiuck-module">
+                                            <a href="https://pvp.qq.com/raiders/" layuimini-content-href="page/table.html" data-title="表格示例" data-icon="fa fa-file-text">
+                                                <i class="fa fa-file-text"></i>
+                                                <cite>内容中心</cite>
+                                            </a>
+                                        </div>
+                                        <div class="layui-col-xs3 layuimini-qiuck-module">
+                                            <a href="https://pvp.qq.com/v/" layuimini-content-href="page/icon.html" data-title="图标列表" data-icon="fa fa-dot-circle-o">
+                                                <i class="fa fa-dot-circle-o"></i>
+                                                <cite>赛事中心</cite>
+                                            </a>
+                                        </div>
+                                        <div class="layui-col-xs3 layuimini-qiuck-module">
+                                            <a href="https://pvp.qq.com/cp/a20171023pvppc/" layuimini-content-href="page/form.html" data-title="表单示例" data-icon="fa fa-calendar">
+                                                <i class="fa fa-calendar"></i>
+                                                <cite>王者百态</cite>
+                                            </a>
+                                        </div>
+                                        <div class="layui-col-xs3 layuimini-qiuck-module">
+                                            <a href="https://pvp.qq.com/web201605/wallpaper.shtml" layuimini-content-href="page/404.html" data-title="404页面" data-icon="fa fa-hourglass-end">
+                                                <i class="fa fa-hourglass-end"></i>
+                                                <cite>游戏壁纸</cite>
+                                            </a>
+                                        </div>
+                                        <div class="layui-col-xs3 layuimini-qiuck-module">
+                                            <a href="https://pvp.qq.com/match/WCC/index.shtml" layuimini-content-href="page/button.html" data-title="按钮示例" data-icon="fa fa-snowflake-o">
+                                                <i class="fa fa-snowflake-o"></i>
+                                                <cite>最热视频</cite>
+                                            </a>
+                                        </div>
+                                        <div class="layui-col-xs3 layuimini-qiuck-module">
+                                            <a href="https://www.baidu.com" layuimini-content-href="https://www.baidu.com" data-title="百度搜索" data-icon="fa fa-search">
+                                                <i class="fa fa-search"></i>
+                                                <cite>百度搜索</cite>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="layui-col-md12">
+                        <div class="layui-card">
+                            <div class="layui-card-header"><i class="fa fa-line-chart icon"></i>报表统计</div>
+                            <div class="layui-card-body">
+                                <div id="echarts-records" style="width: 100%;min-height:500px"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-col-md4">
+
+                <div class="layui-card">
+                    <div class="layui-card-header"><i class="fa fa-bullhorn icon icon-tip"></i>最新资讯</div>
+                    <div class="layui-card-body layui-text">
+                        <div class="layuimini-notice">
+                            <div class="layuimini-notice-title"><a href="https://pvp.qq.com/v/detail.shtml?G_Biz=18&tid=692950">澜朋友上线了！</a></div>
+                            <div class="layuimini-notice-extra">2021-09-09 17:12</div>
+                            
+                        </div>
+                        <div class="layuimini-notice">
+                            <div class="layuimini-notice-title"><a href="https://pvp.qq.com/v/detail.shtml?G_Biz=18&tid=715222&e_code=pvppvpweb_detail.dpvlist.r0">当八戒遇到了嫦娥？？峡谷里的相爱相杀！</a></div>
+                            <div class="layuimini-notice-extra">2021-09-09 17:12</div>
+                           
+                        </div>
+                        <div class="layuimini-notice">
+                            <div class="layuimini-notice-title"><a href="https://pvp.qq.com/v/detail.shtml?G_Biz=18&tid=685648">月末奥斯卡之夜 一网打尽国服榜</a></div>
+                            <div class="layuimini-notice-extra">2021-09-09 17:12</div>
+                       
+                        </div>
+                        <div class="layuimini-notice">
+                            <div class="layuimini-notice-title"><a href="https://pvp.qq.com/v/detail.shtml?G_Biz=18&tid=714900&e_code=pvppvpweb_detail.dpvlist.r3">史上最高减伤，铠爹竟打出高达2点的暴击？！</a></div>
+                            <div class="layuimini-notice-extra">2021-09-09 17:12</div>
+                         
+                        </div>
+                        <div class="layuimini-notice">
+                            <div class="layuimini-notice-title"><a href="https://pvp.qq.com/v/detail.shtml?G_Biz=18&tid=666320&e_code=pvppvpweb_detail.dpvlist.r5">墨子：辅助也能输出，一炮一人头，真刺激！</a></div>
+                            <div class="layuimini-notice-extra">2021-09-09 17:12</div>
+                          
+                        </div>
+                        <div class="layuimini-notice">
+                            <div class="layuimini-notice-title"><a href="https://pvp.qq.com/v/detail.shtml?G_Biz=18&tid=703332&e_code=pvppvpweb_detail.mpvlist.r1">小小李白可笑可笑</a></div>
+                            <div class="layuimini-notice-extra">2021-09-09 17:12</div>
+                     
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-card">
+                    <div class="layui-card-header"><i class="fa fa-fire icon"></i>后台信息</div>
+                    <div class="layui-card-body layui-text">
+                        <table class="layui-table">
+                            <colgroup>
+                                <col width="100">
+                                <col>
+                            </colgroup>
+                            <tbody>
+                            <tr>
+                                <td>后台名称</td>
+                                <td>
+                                    天猫书籍
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>当前版本</td>
+                                <td>v0.0.1</td>
+                            </tr>
+                            <tr>
+                                <td>主要特色</td>
+                                <td>富强、民主</td>
+                            </tr>
+                            <tr>
+                                <td>传送地址</td>
+                                <td>
+                                    富强、民主<a href="http://www.shdf.gov.cn/">点击查看</a><br>
+                                    富强、民主<a href="http://news.cntv.cn/special/shzyhxjzg/">点击查看</a><br>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>下载地址</td>
+                                <td>
+                                    富强、民主。<a href="http://www.shdf.gov.cn/">点击查看</a> / <a href="http://news.cntv.cn/special/shzyhxjzg/">网通一区</a><br>
+                                    富强、民主<a href="http://www.shdf.gov.cn/">点击查看</a> / <a href="http://news.cntv.cn/special/shzyhxjzg/">电信一区</a><br>
+                                </td>
+                            </tr>
+                        
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="layui-card">
+                    <div class="layui-card-header"><i class="fa fa-paper-plane-o icon"></i>作者心语</div>
+                    <div class="layui-card-body layui-text layadmin-text">
+                        <p>富强、民主、文明、和谐，自由、平等、公正、法治，爱国、敬业、诚信和友善。</p>
+                       <p>富强、民主、文明、和谐，自由、平等、公正、法治，爱国、敬业、诚信和友善。</p>
+					   <p>富强、民主、文明、和谐，自由、平等、公正、法治，爱国、敬业、诚信和友善。</p>
+					   <p>富强、民主、文明、和谐，自由、平等、公正、法治，爱国、敬业、诚信和友善。</p>
+
+					   
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../layui/layui.js" charset="utf-8"></script>
+<script src="../js/lay-config.js" charset="utf-8"></script>
+<script src="../js/echarts-en.min.js"></script>
+<script>
+    layui.use(['layer', 'miniTab','echarts'], function () {
+        var $ = layui.jquery,
+            layer = layui.layer,
+            miniTab = layui.miniTab,
+            echarts = layui.echarts;
+
+        miniTab.listen();
+
+        /**
+         * 查看公告信息
+         **/
+        $('body').on('click', '.layuimini-notice', function () {
+            var title = $(this).children('.layuimini-notice-title').text(),
+                noticeTime = $(this).children('.layuimini-notice-extra').text(),
+                content = $(this).children('.layuimini-notice-content').html();
+            var html = '<div style="padding:15px 20px; text-align:justify; line-height: 22px;border-bottom:1px solid #e2e2e2;background-color: #2f4056;color: #ffffff">\n' +
+                '<div style="text-align: center;margin-bottom: 20px;font-weight: bold;border-bottom:1px solid #718fb5;padding-bottom: 5px"><h4 class="text-danger">' + title + '</h4></div>\n' +
+                '<div style="font-size: 12px">' + content + '</div>\n' +
+                '</div>\n';
+
+        });
+
+        //获取后端数据ajax
+        $.post("/car/pageAll.do",function (rs) {
+            layer.msg(rs.msg);//展示业务消息
+            if (rs.code != 200){
+                return false;
+            }
+            console.log(rs.data);
+            var data=rs.data;
+
+
+
+        var count1=0,xl1=0,price1=0;
+        var count2=0,xl2=0,price2=0;
+        var count3=0,xl3=0,price3=0;
+
+        var names=["故事类","艺术类","宗教类"];
+        var nums1=[];    //各个类型的数量
+        var nums2=[];    //各个类型的销量
+        var nums3=[];    //最高价格
+        for (var i=0;i<data.length;i++){
+
+            // names.push(data[i].type);
+            if (data[i].type ==1){
+                count1++;
+                xl1+=data[i].deposit;
+                if (price1<data[i].rentPrice){
+                    price1=data[i].rentPrice;
+                }
+
+            }else if (data[i].type ==2){
+                count2++;
+                xl2+=data[i].deposit;
+                if (price2<data[i].rentPrice){
+                    price2=data[i].rentPrice;
+                }
+            }else if (data[i].type ==3){
+                count3++;
+                xl3+=data[i].deposit;
+                if (price3<data[i].rentPrice){
+                    price3=data[i].rentPrice;
+                }
+            }
+
+
+        }
+        nums1.push(count1*80,count2*80,count3*80);
+        nums2.push(xl1,xl2,xl3);
+        nums3.push(price1,price2,price3);
+
+
+        console.log(nums1)
+        /**
+         * 报表功能
+         */
+        var echartsRecords = echarts.init(document.getElementById('echarts-records'), 'walden');
+
+		 var option = {
+		    legend: {},
+		    tooltip: {},
+		    dataset: {
+		    },
+		    xAxis: {type: 'category',data: names},
+		    yAxis: {},
+		    // Declare several bar series, each will be mapped
+		    // to a column of dataset.source by default.
+		    series: [
+                {type: 'bar',name: '各种类数', data: nums1},
+		        {type: 'bar',name: '销量数', data: nums2},
+		        {type: 'bar',name: '订阅数', data: nums3},
+
+		    ]
+		};
+        echartsRecords.setOption(option);
+
+        // echarts 窗口缩放自适应
+        window.onresize = function(){
+            echartsRecords.resize();
+        }
+
+    });
+    })
+</script>
+</body>
+</html>

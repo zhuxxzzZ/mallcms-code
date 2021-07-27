@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jackguo.Dao.BusReturnMapper">
+  <resultMap id="BaseResultMap" type="com.jackguo.vo.BusReturnVo">
+    <!--@mbg.generated-->
+    <!--@Table bus_return-->
+    <id column="id" property="id" />
+    <result column="rent_id" property="rentId" />
+    <result column="num" property="num" />
+    <result column="return_time" property="returnTime" />
+    <result column="rent_price" property="rentPrice" />
+    <result column="pay_money" property="payMoney" />
+    <result column="problem" property="problem" />
+    <result column="total_money" property="totalMoney" />
+    <result column="user_id" property="userId" />
+    <result column="create_time" property="createTime" />
+    <result column="name" property="name" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, rent_id, num, return_time, rent_price, pay_money, problem, total_money, user_id, 
+    create_time,name
+  </sql>
+
+  <insert id="insert">
+    insert into bus_return (rent_id, num, return_time, rent_price, pay_money, problem, total_money, user_id,name )
+      value (
+        #{rentId},
+        #{num},
+        #{returnTime},
+        #{rentPrice},
+        #{payMoney},
+        #{problem},
+        #{totalMoney},
+        #{userId},
+        #{name}
+
+      )
+
+  </insert>
+
+  <select id="selectByNum" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+            from bus_return
+    <where>
+      <if test="num == null and num ==''" >
+        and num = #{num}
+      </if>
+    </where>
+  </select>
+
+  <select id="selectListByName" resultMap="BaseResultMap">
+
+    select <include refid="Base_Column_List" />
+    from bus_return where name=#{name}
+  </select>
+</mapper>

@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>书本管理</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
+	<link rel="stylesheet" href="../../css/public.css" media="all" />
+</head>
+<body class="childrenBody">
+<form class="layui-form">
+	<blockquote class="layui-elem-quote quoteBox">
+		<form class="layui-form layui-form-pane">
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">书本号</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" placeholder="书本号" id="num"/>
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">书本类型</label>
+					<div class="layui-input-inline">
+						<select id="type">
+							<option value="">书本类型</option>
+							<option value="1">故事类</option>
+							<option value="2">艺术类</option>
+							<option value="3">宗教类</option>
+						</select>
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">书本名称</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" placeholder="书本名称"  id="color"/>
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">购买状态</label>
+					<div class="layui-input-inline">
+						<select id="isRent">
+							<option value="">状态</option>
+							<option value="1">未购买</option>
+							<option value="2">已购买</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">价格</label>
+						<div class="layui-input-inline" style="width: 82px;">
+							<input type="text" class="layui-input" placeholder="最低价格" id="minPrice"/>
+						</div>
+						<div class="layui-form-mid">-</div>
+						<div class="layui-input-inline" style="width: 82px;">
+							<input type="text" class="layui-input" placeholder="最高价格" id="MaxPrice"/>
+						</div>
+					</div>
+
+					<div class="layui-inline">
+						<label class="layui-form-label">订阅</label>
+						<div class="layui-input-inline" style="width: 82px;">
+							<input type="text" class="layui-input" placeholder="最低订阅" id="minRentPrice"/>
+						</div>
+						<div class="layui-form-mid">-</div>
+						<div class="layui-input-inline" style="width: 82px;">
+							<input type="text" class="layui-input" placeholder="最高订阅" id="maxRentPrice"/>
+						</div>
+
+					</div>
+
+					<div class="layui-inline" style="margin-left: 117px">
+						<button class="layui-btn layui-icon  layui-icon-search" id="searchBtn" type="button">搜索</button>
+						<button class="layui-btn layui-icon  layui-btn-primary layui-icon-refresh" id="reset" type="button">重置</button>
+
+					</div>
+				</div>
+
+			</div>
+		</form>
+	</blockquote>
+	<table id="dataTable" lay-filter="dataTableFilter"></table>
+
+	<!--操作-->
+	<script type="text/html" id="headBtns">
+		<button class="layui-btn layui-btn-sm" lay-event="add">
+			<i class="layui-icon layui-icon-add-1"></i>新增
+		</button>
+	</script>
+	<script type="text/html" id="rowBtns">
+		<button class="layui-btn layui-btn-sm" lay-event="rent">
+			<i class="layui-icon layui-icon-release"></i>
+			购买
+		</button>
+	</script>
+
+
+</form>
+<!--新增车辆-->
+<script type="text/html" id="addTpl">
+	<form class="layui-form layui-form-pane" style="padding: 10px">
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<div class="layui-form-item">
+					<label class="layui-form-label">书本号</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" name="num" lay-verify="required" lay-reqText="请输入书本号" placeholder="书本号" >
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">书本类型</label>
+					<div class="layui-input-inline">
+						<select name="type" lay-verify="required" lay-reqText="请选择书本类型">
+							<option value="">类型</option>
+							<option value="1">故事</option>
+							<option value="2">艺术</option>
+							<option value="3">宗教</option>
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">书本名</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" name="color" lay-verify="required" lay-reqText="请输入书本名" placeholder="书本名" >
+					</div>
+				</div>
+			</div>
+			<div class="layui-inline">
+				<label class="layui-form-label">图片<</label>
+				<div class="layui-input-inline">
+					<img id="uploadImg" src="../../images/update.PNG" style="height: 160px;width:160px;" title="选择图片" />
+					<input id="img" name="img" type="hidden"  lay-verify="required" lay-reqText="请上传商品图片" />
+
+				</div>
+
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">价格</label>
+				<div class="layui-input-inline">
+					<input type="text" class="layui-input" name="price" lay-verify="required|number" lay-reqText="请输入价格" placeholder="价格" >
+				</div>
+			</div>
+			<div class="layui-inline">
+				<label class="layui-form-label">订阅数</label>
+				<div class="layui-input-inline">
+					<input type="text" class="layui-input" name="rentPrice" lay-verify="required|number" lay-reqText="请输入订阅数" placeholder="订阅数" >
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item">
+<!--			<div class="layui-inline">-->
+<!--				<label class="layui-form-label">天猫补贴</label>-->
+<!--				<div class="layui-input-inline">-->
+<!--					<input type="text" class="layui-input" name="deposit" lay-verify="required|number" lay-reqText="请输入天猫补贴" placeholder="天猫补贴" >-->
+<!--				</div>-->
+<!--			</div>-->
+		</div>
+		<div class="layui-form-item layui-form-text">
+			<label class="layui-form-label">出版社</label>
+			<div class="layui-input-block">
+				<textarea name="descp" class="layui-textarea"></textarea>
+			</div>
+		</div>
+		<button type="button" style="display: none" id="subBtn1" lay-submit lay-filter="subBtnFilter"></button>
+	</form>
+</script>
+<!-- 出租车辆 -->
+<script type="text/html" id="rentTpl">
+	<form class="layui-form layui-form-pane" style="padding: 10px" lay-filter="rentFormFilter">
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<div class="layui-form-item">
+					<label class="layui-form-label">书本号</label>
+					<div class="layui-input-inline">
+						<input type="text" readonly class="layui-input" name="num" lay-verify="required" lay-reqText="请输入书本号" placeholder="书本号" >
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">书本类型</label>
+					<div class="layui-input-inline">
+						<select name="type" readonly lay-verify="required" lay-reqText="请选择商品类型" disabled>
+							<option value="" >书本类型</option>
+							<option value="1">故事</option>
+							<option value="2">艺术</option>
+							<option value="3">宗教</option>
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">书本名</label>
+					<div class="layui-input-inline">
+						<input type="text" readonly class="layui-input" name="color" lay-verify="required" lay-reqText="请输入书本名称" placeholder="名称" >
+					</div>
+				</div>
+			</div>
+			<div class="layui-inline">
+				<label class="layui-form-label">图片</label>
+				<div class="layui-input-inline">
+					<img id="carImg" src="${pageContext.request.contextPath}/resources/images/upload.jpg" style="height: 160px;width:160px;" />
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<div class="layui-inline">
+				<label class="layui-form-label">价格</label>
+				<div class="layui-input-inline">
+					<input type="text" readonly class="layui-input" name="price" lay-verify="required|number" lay-reqText="请输入价格" placeholder="价格" >
+				</div>
+			</div>
+			<div class="layui-inline">
+				<label class="layui-form-label">订阅数</label>
+				<div class="layui-input-inline">
+					<input type="text" readonly class="layui-input" name="rentPrice" lay-verify="required|number" lay-reqText="请输入订阅数" placeholder="订阅数" >
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item">
+<!--			<div class="layui-inline">-->
+<!--				<label class="layui-form-label">销量</label>-->
+<!--				<div class="layui-input-inline">-->
+<!--					<input type="text" class="layui-input" name="deposit" lay-verify="required|number" lay-reqText="请输入销量" placeholder="销量" >-->
+<!--				</div>-->
+<!--			</div>-->
+			<div class="layui-inline">
+				<label class="layui-form-label">身份证</label>
+				<div class="layui-input-inline">
+					<input type="text" class="layui-input" name="idCard" lay-verify="required|idCard" lay-reqText="请输入客户身份证" placeholder="客户身份证" >
+				</div>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">预计到货时间</label>
+			<div class="layui-input-block" style="width:514px">
+				<input type="text" readonly name="rentTime"  id="rentTime" class="layui-input"/>
+			</div>
+		</div>
+		<button type="button" style="display: none" id="subBtn" lay-submit lay-filter="subBtnFilter"></button>
+	</form>
+</script>
+
+<script type="text/javascript" src="../../layui/layui.js"></script>
+<script >
+	layui.use(["table","jquery","layer","form","upload",'laydate'],function (){
+		let table=layui.table;
+		let $=layui.jquery;
+		let layer=layui.layer;
+		let form=layui.form;
+		let upload=layui.upload;
+		let laydate=layui.laydate;
+	//	表格参数
+		let tabOps={
+			id:"dataTableId",
+			elem:"#dataTable",
+			url:"/car/page.do",
+			page:true,
+			toolbar:"#headBtns",
+			cols:[
+					[
+				{field:"num",title:"书本号",width:140},
+				{field:"type",title:"书本类型",templet:function (d){
+						let type=d.type;
+						if(type == 1){
+							return  "故事";
+						}else if(type == 2){
+							return "艺术";
+
+						}else{
+							return "宗教";
+					}
+
+				},width:90 },
+				{field:"color",title:"书本名",width:120},
+				{field:"price",title:"价格",minWidth:90},
+				{field:"rentPrice",title:"订阅数",minWidth:90},
+				// {field:"deposit",title:"销量",minWidth:90},
+				{field:"isRent",title:"状态",templet:function (d){
+						let isRent=d.isRent;
+						if(isRent == 1){
+					return  "未购买";
+					}else{
+						return "已购买";
+					}
+
+					},width:120 },
+				{title:"图片",templet:function (d){
+					let img=d.img;
+						return "<button class='layui-btn layui-btn-xs' onclick=showUserImg(\'"+img+"\') >查看</button>"
+
+					},width:70},
+				{field:"descp",title:"出版社",minWidth:90},
+				{field:"createTime",title:"创建时间",minWidth:160},
+				{title:"操作",toolbar:"#rowBtns",fixed:"right"}
+
+
+			]
+			],
+
+			parseData:function (rs){
+				return{
+					code: rs.code,
+					msg: rs.msg,
+					count: rs.data.total,
+					data: rs.data.list
+
+
+				}
+			},
+
+			response:{
+
+				statusCode:200
+			}
+
+		};
+		//进行渲染表格
+		//重置
+		let tabIns=table.render(tabOps);
+
+
+		$("#reset").click(function (){
+			$("#num").val("");
+			$("#type").val("");
+			$("#color").val("");
+			$("#minPrice").val("");
+			$("#maxPrice").val("");
+			$("#minRentPrice").val("")
+			;$("#MaxRentPrice").val("");
+			$("#isRent").val("");
+			$("#descp").val("");
+
+			form.render();
+
+		})
+
+	//	按钮查询
+		$("#searchBtn").click(function (){
+			let num = $("#num").val();
+			let type = $("#type").val();
+			let color = $("#color").val();
+			let minPrice = $("#minPrice").val();
+			let maxPrice = $("#maxPrice").val();
+			let minRentPrice = $("#minRentPrice").val();
+			let maxRentPrice = $("#maxRentPrice").val();
+			let isRent = $("#isRent").val();
+			let descp = $("#descp").val();
+			tabIns.reload({
+				where:{
+					"num" :num,
+					"type" :type,
+					"color" :color,
+					"minPrice" :minPrice,
+					"maxPrice" :maxPrice,
+					"minRentPrice" :minRentPrice,
+					"maxRentPrice" :maxRentPrice,
+					"isRent" :isRent,
+					"descp" :descp,
+
+				}
+
+			})
+
+		});
+
+	//	表格头工具栏监听事件
+		table.on("toolbar(dataTableFilter)",function (d){
+
+			let event=d.event;
+			if(event =="add"){
+				add();
+
+			}
+
+		})
+		/**
+		 * 新增车辆的方法
+		 */
+		function add() {
+			//弹出层的参数
+			let layOps = {
+				title:"新增车辆",
+				type:1,
+				content:$("#addTpl").html(),
+				area:['710px','580px'],
+				success:function (layero,index) {
+					form.render();
+					/* 初始化上传组件 */
+					//初始化文件上传
+					let uploadOpt = {
+						elem:"#uploadImg",
+						url: "/file/uploadImage.do",//处理文件上传的接口
+						auto:true,//自动上传
+						field:"image",//指定文件上传的数据域名称
+						choose:function(obj){
+							//文件预览
+							obj.preview(function(index, file, result){
+								//修改图片src属性值 实现预览
+								$("#img").attr("src",result);
+							})
+						},
+						done:function (rs,fileIndex,upload) {
+							//将业务消息展示
+							layer.msg(rs.msg);
+							if (rs.code == 200){
+								//给隐藏框赋值
+								$("#img").val(rs.data);
+							}
+						}
+					};
+					upload.render(uploadOpt);
+					//表单的提交监听
+					form.on("submit(subBtnFilter)",function (d) {
+						let formData = d.field;
+						//使用ajax提交数据
+						$.post("/car/add.do",formData,function (rs) {
+							layer.msg(rs.msg);//展示业务消息
+							if (rs.code != 200){
+								return false;
+							}
+							layer.close(index);//关闭弹层
+							//刷新表格
+							$("#searchBtn").click();
+						})
+						return false;//阻止默认提交行为
+					})
+				},
+				btn:['确认','取消'],
+				btnAlign:"c",
+				yes:function (index,layero) {
+					//点击隐藏的提交按钮  触发 表单提交监听
+					$("#subBtn1").click();
+				}
+			};
+			layer.open(layOps);
+		}
+
+
+		//	表格行工具栏事件
+		table.on("tool(dataTableFilter)",function (d){
+
+			let event=d.event;
+			let rowData=d.data;
+			if(event =="rent"){
+
+				rent(rowData);
+			}
+
+
+		})
+		//出租方法
+		function rent(rowData){
+			//弹出层的参数
+			let layOps = {
+				title:"车辆出租",
+				type:1,
+				content:$("#rentTpl").html(),
+				area:['710px','580px'],
+				success:function (layero,index) {
+					//为表单赋值
+					form.val("rentFormFilter",rowData);
+					console.log("rowData"+rowData);
+					//为图片设置数据
+					$("#carImg").attr("src","/upload/"+rowData.img);
+					//渲染时间组件
+					laydate.render({
+						elem:"#rentTime",
+						range:"~"
+					})
+					//表单的提交监听
+					form.on("submit(subBtnFilter)",function (d) {
+						let formData = d.field;
+						//使用ajax提交数据
+						$.post("/rent/add.do",formData,function (rs) {
+							layer.msg(rs.msg);//展示业务消息
+							if (rs.code != 200){
+								return false;
+							}
+							layer.close(index);//关闭弹层
+							//刷新表格
+							$("#searchBtn").click();
+						})
+						return false;//阻止默认提交行为
+					})
+				},
+				btn:['确认','取消'],
+				btnAlign:"c",
+				yes:function (index,layero) {
+					//点击隐藏的提交按钮  触发 表单提交监听
+					$("#subBtn").click();
+				}
+			};
+			layer.open(layOps);
+		}
+	//	图片显示
+	//	url头像的路径
+		window.showUserImg =function (url){
+			let imgData={
+				"title": "头像",
+				"start":0,
+				"data":[
+					{
+						"alt":"车辆图片",
+						"pid":666,
+						"src":"/upload/"+url,
+						"thumb":url
+
+					}
+				]
+			}
+			layer.photos({
+				photos:imgData
+
+			});
+
+		}
+
+	//
+	})
+
+
+</script >
+
+</body>
+</html>

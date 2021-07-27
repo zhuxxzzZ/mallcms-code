@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jackguo.Dao.SysRoleMapper">
+  <resultMap id="BaseResultMap" type="com.jackguo.vo.SysRoleVo">
+    <!--@mbg.generated-->
+    <!--@Table sys_role-->
+    <id column="id" property="id" />
+    <result column="name" property="name" />
+    <result column="tag" property="tag" />
+    <result column="descp" property="descp" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, `name`, tag, descp
+  </sql>
+
+  <select id="selectByName" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from sys_role
+    <where>
+      <if test="name == null and name == ''">
+        and name like concat('%',#{name},'%')
+      </if>
+
+    </where>
+    </select>
+
+  <insert id="insert">
+    insert into sys_role ( `name`, tag, descp)
+        value (
+             #{name},
+             #{tag},
+             #{descp}
+
+            )
+
+
+  </insert>
+
+  <update id="update">
+    update sys_role set
+    `name`=#{name},
+    tag=#{tag},
+    descp=#{descp}
+
+    where
+    id=#{id}
+
+  </update>
+
+  <delete id="delete">
+
+    delete from sys_role where id=#{id}
+  </delete>
+
+  <select id="selectListRoles" resultMap="BaseResultMap">
+    select sr.*
+    from
+    sys_role sr left join sys_user_role_rel srr on sr.id = srr.role_id
+    where srr.user_id = #{id}
+
+  </select>
+
+  <delete id="deleteUserRoles">
+    delete  from sys_user_role_rel where user_id = #{id}
+  </delete>
+
+  <insert id="insertUserRoles">
+    insert  into sys_user_role_rel (user_id,role_id) values
+    <foreach collection="roleIds" item="role" separator=",">
+      (#{userId},#{role})
+    </foreach>
+
+  </insert>
+
+  <select id="queryPermissionById" resultType="java.lang.Integer">
+
+    select per_id from sys_role_per_rel where role_id = #{id}
+    </select>
+
+  <delete id="deleteRolePermission">
+    delete  from sys_role_per_rel where role_id=#{roleId}
+  </delete>
+
+  <insert id="insertRolePermission">
+    insert  into sys_role_per_rel (role_id,per_id) values
+    <foreach collection="perIds" item="perId" separator=",">
+      (#{roleId},#{perId})
+    </foreach>
+  </insert>
+</mapper>

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jackguo.Dao.SysPermissionMapper">
+  <resultMap id="BaseResultMap" type="com.jackguo.vo.SysPermissionVo">
+    <!--@mbg.generated-->
+    <!--@Table sys_permission-->
+    <id column="id" property="id" />
+    <result column="title" property="title" />
+    <result column="icon" property="icon" />
+    <result column="href" property="href" />
+    <result column="spread" property="spread" />
+    <result column="type" property="type" />
+    <result column="tag" property="tag" />
+    <result column="sort" property="sort" />
+    <result column="parent_id" property="parentId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, title, icon, href, spread, `type`, tag, sort, parent_id
+  </sql>
+<!--根据用户id查询所有菜单 userid -->
+  <select id="selectList" resultMap="BaseResultMap">
+
+    select distinct
+    <include refid="Base_Column_List" />
+    from sys_permission sp left join sys_role_per_rel srp on sp.id=srp.per_id
+                           left join sys_user_role_rel sur on srp.role_id =sur.role_id
+                             where sur.user_id=#{userId} and sp.type=#{type} order by sp.sort desc
+
+  </select>
+
+  <select id="selectListTags" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from sys_permission as sp
+        left join sys_role_per_rel as srp on sp.id=srp.per_id
+        left join sys_user_role_rel as sur on srp.role_id = sur.role_id where sur.user_id =#{id}
+  </select>
+
+  <select id="queryAllPermByTitle" resultMap="BaseResultMap">
+    select  <include refid="Base_Column_List" />
+    from sys_permission
+    <where>
+      <if test="title != null and title != ''">
+        and title like concat('%',#{title},'%')
+      </if>
+    </where>
+
+  </select>
+
+  <insert id="insert">
+    INSERT INTO sys_permission ( `title`, `icon`, `href`, `spread`, `type`, `tag`, `sort`, `parent_id` )
+    VALUE
+    ( #{title}, #{icon}, #{href}, #{spread}, #{type}, #{tag}, #{sort},#{parentId});
+
+  </insert>
+
+  <update id="update">
+    UPDATE sys_permission
+    SET `title` = #{title},
+    `icon` = #{icon},
+    `href` = #{href},
+    `spread` =#{spread},
+    `type` = #{type},
+    `tag` = #{tag},
+    `sort` = #{sort},
+    `parent_id` = #{parentId}
+    WHERE
+     id=#{id}
+  </update>
+
+  <delete id="delete">
+
+    delete from sys_permission where id=#{id};
+
+  </delete>
+<!--根据ID查询所有父节点-->
+  <select id="selectAllChildId" resultType="java.lang.Integer">
+    select id from sys_permission where parent_id in
+    <foreach collection="ids" item="id" separator="," open="(" close=")">
+      #{id}
+    </foreach>
+  </select>
+  <!-- 批量删除权限 -->
+  <delete id="batchDelete">
+    delete from sys_permission where id in
+    <foreach collection="ids" item="id" separator="," open="(" close=")">
+      #{id}
+    </foreach>
+  </delete>
+
+  <!-- 批量删除角色权限关系-->
+  <delete id="batchDeleteRel">
+    delete from sys_role_per_rel where per_id in
+    <foreach collection="ids" item="id" separator="," open="(" close=")">
+      #{id}
+    </foreach>
+  </delete>
+</mapper>

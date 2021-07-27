@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>用户中心</title>
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="format-detection" content="telephone=no">
+	<link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
+	<link rel="stylesheet" href="../../css/public.css" media="all" />
+</head>
+<body class="childrenBody">
+<form class="layui-form">
+	<blockquote class="layui-elem-quote quoteBox">
+		<form class="layui-form layui-form-pane">
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">姓名</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" placeholder="姓名" id="realname"/>
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">手机号</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" placeholder="手机号" id="phone"/>
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">地址</label>
+					<div class="layui-input-inline">
+						<input type="text" class="layui-input" placeholder="地址"  id="address"/>
+					</div>
+				</div>
+				<div class="layui-inline">
+					<button class="layui-btn layui-icon  layui-icon-search" id="searchBtn" type="button">搜索</button>
+					<button class="layui-btn layui-icon  layui-btn-primary layui-icon-refresh" id="reset" type="button">重置</button>
+				</div>
+
+
+			</div>
+		</form>
+	</blockquote>
+	<table id="dataTable" lay-filter="dataTableFilter"></table>
+
+	<!--操作-->
+	<script type="text/html" id="headBtns">
+		<button class="layui-btn layui-btn-sm" lay-event="add">
+			<i class="layui-icon layui-icon-add-1"></i>新增
+		</button>
+	</script>
+	<script type="text/html" id="rowBtns">
+		<button class="layui-btn layui-btn-sm" lay-event="resetPwd">
+			<i class="layui-icon layui-icon-refresh"></i>重置密码
+		</button>
+		<button class="layui-btn layui-btn-sm" lay-event="setRoles">
+			<i class="layui-icon layui-icon-set"></i>设置角色
+		</button>
+	</script>
+
+</form>
+<!--新增用户模板-->
+<script type="text/html" id="addUserTpl">
+		<form class="layui-form-pane layui-form" style="margin: 10px">
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">姓名</label>
+					<div class="layui-input-inline">
+						<input class="layui-input" type="text" lay-verify="required" lay-reqText="请输入姓名" name="realname" placeholder="用户姓名" autocomplete="off"/>
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">登录名</label>
+					<div class="layui-input-inline">
+						<input class="layui-input" type="text" lay-verify="required" lay-reqText="请输入登录名" name="loginName" placeholder="登录名" autocomplete="off"/>
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">手机号</label>
+					<div class="layui-input-inline">
+						<input class="layui-input" type="text" lay-verify="required|phone" lay-reqText="请输入手机号" name="phone" placeholder="手机号" autocomplete="off"/>
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">身份证</label>
+					<div class="layui-input-inline">
+						<input class="layui-input" type="text" lay-verify="required|idCard" lay-reqText="请输入身份证号" name="idCard" placeholder="身份证号" autocomplete="off"/>
+					</div>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">性别</label>
+					<div class="layui-input-inline">
+						<input  type="radio" name="sex" value="1" title="男" checked>
+						<input type="radio" name="sex" value="2" title="女" />
+					</div>
+				</div>
+			</div>
+
+			<div class="layui-form-item layui-form-text">
+				<label class="layui-form-label">地址</label>
+				<div class="layui-input-block">
+					<textarea class="layui-textarea" name="address" placeholder="地址" lay-verify="required" lay-reqText="请输入地址"></textarea>
+				</div>
+
+			</div>
+			<button class="layui-btn " type="button" style="display: none" id="subBtn" lay-submit lay-filter="subBtnFilter"></button>
+
+
+		</form>
+
+
+</script>
+<!--设置角色的模板-->
+<script type="text/html" id="setRoleTpl">
+
+	<form class="layui-form layui-form-pane" style="padding-left: 40px" id="allRoles" >
+
+<!--		<div class="layui-form-item">-->
+<!--			<div class="layui-inline" style="margin-right:40px;" >-->
+<!--				<input type="checkbox" title="管理员" lay-skin="primary"/>-->
+<!--			</div>-->
+
+<!--			<div class="layui-inline" style="margin-right: 40px;" >-->
+<!--				<input type="checkbox" title="管理员" lay-skin="primary"/>-->
+<!--			</div>-->
+
+<!--			<div class="layui-inline" style="margin-right: 40px;" >-->
+<!--				<input type="checkbox" title="管理员" lay-skin="primary"/>-->
+<!--			</div>-->
+
+<!--		</div>-->
+
+		<button type="button" style="display: none" id="subBtn1" lay-submit lay-filter="subBtnFilter"></button>
+	</form>
+
+</script>
+<script type="text/javascript" src="../../layui/layui.js"></script>
+<script >
+	layui.use(["table","jquery","layer","form"],function (){
+		let table=layui.table;
+		let $=layui.jquery;
+		let layer=layui.layer;
+		let form=layui.form;
+	//	表格参数
+		let tabOps={
+			id:"dataTableId",
+			elem:"#dataTable",
+			url:"/sysuser/page.do",
+			page:true,
+			toolbar:"#headBtns",
+			cols:[
+					[
+				{type:"checkbox"},
+				{field:"realname",title:"姓名",width:90},
+				{field:"loginName",title:"登录名",width:90},
+				{field:"phone",title:"电话",width:120},
+				{field:"idCard",title:"身份证",minWidth:170},
+				{field:"sex",title:"性别",templet:function (d){
+						let sex=d.sex;
+						if(sex == 1){
+							return  "男";
+						}else{
+							return "女"
+						}
+
+					},width:60 },
+				{field:"address",title:"地址"},
+				{title:"头像",templet:function (d){
+					let img=d.img;
+					return "<button class='layui-btn layui-btn-xs' onclick=showUserImg(\'"+img+"\') >查看</button>"
+
+					},width:70},
+				{field:"createTime",title:"创建时间",minWidth:160},
+				{title:"操作",toolbar:"#rowBtns",minWidth:230},
+
+
+
+			]
+			],
+
+			parseData:function (rs){
+				return{
+					code: rs.code,
+					msg: rs.msg,
+					count: rs.data.total,
+					data: rs.data.list
+
+
+				}
+			},
+
+			response:{
+
+				statusCode:200
+			}
+
+		};
+		//进行渲染表格
+		//重置
+		let tabIns=table.render(tabOps);
+		$("#reset").click(function (){
+			$("#name").val("");
+			$("#phone").val("");
+			$("#address").val("");
+			form.render();
+
+		})
+
+	//	按钮查询
+		$("#searchBtn").click(function (){
+			let realname = $("#realname").val();
+			let phone = $("#phone").val();
+			let address = $("#address").val();
+			tabIns.reload({
+				where:{
+					"realname" :realname,
+					"phone" :phone,
+					"address" :address,
+
+				}
+
+			})
+
+		});
+
+	//	表格头工具栏监听事件
+		table.on("toolbar(dataTableFilter)",function (d){
+
+			let event=d.event;
+			if(event =="add"){
+				add();
+
+			}
+
+
+		})
+
+		//新增用户方法
+		function add(){
+			//弹出层的参数
+			let layOps={
+				title:"新增用户",
+				type: 1,
+				content:$("#addUserTpl").html(),
+				area:['680px','450px'],
+				success:function (layero,index){
+					form.render("radio");
+					//表单的提交监听
+					form.on("submit(subBtnFilter)",function (d){
+
+						let formData=d.field;
+						$.post("/sysuser/add.do",formData,function (rs){
+
+							layer.msg(rs.msg);//展示业务消息
+							if(rs.code !=200){
+
+								return false;
+
+
+							}
+							layer.close(index);//关闭弹层
+							//刷新表格
+							$("#searchBtn").click();
+
+
+
+						})
+
+						return false;
+
+					});
+
+				},
+				btn:['确认','取消'],
+				btnAlign:"c",
+				yes: function (index,layero){
+					//点击隐藏的提交按钮，触发表单的提交监听
+					$("#subBtn").click();
+
+
+				}
+
+
+			};
+
+
+			layer.open(layOps);
+
+
+		}
+	//	表格行工具栏事件
+		table.on("tool(dataTableFilter)",function (d){
+
+			let event=d.event;
+			let rowData=d.data;
+			if(event =="resetPwd"){
+
+				resetPwd(rowData);
+			}else if (event == "setRoles"){
+				setRoles(rowData);
+			}
+
+
+		})
+
+		function resetPwd(rowData) {
+			layer.confirm("确定要重置密码吗?",function (index) {
+				$.get("/sysuser/reset.do",{id:rowData.id},function (rs) {
+					//展示业务消息
+					layer.msg(rs.msg);
+					layer.close(index);//关闭弹出层
+					$("#searchBtn").click();//重载表格
+				})
+			})
+		}
+		function  setRoles(rowData) {
+			//1. 弹层
+			//2. 显示所有的角色
+			//  查询所有的角色
+			//3. 默认勾选当前用户拥有的角色
+			// 查询当前 用户拥有的角色
+			//4. 提交 用户ID  和  已经勾选了的角色ID
+			//弹出层的参数
+			let layOps = {
+				title:"用户角色管理",
+				type:1,
+				content:$("#setRoleTpl").html(),
+				area:['300px','450px'],
+				success:function (layero,index) {
+					/*
+                    *  <div class="layui-form-item">
+                            <div class="layui-input-inline" style="width: 250px">
+                            <input type="checkbox" title="管理员" lay-skin="primary" />
+                            <input type="checkbox" title="管理员" lay-skin="primary"/>
+                            </div>
+                        </div>*/
+					//1.获取所有的角色
+
+					$.get("/role/all.do",function (rs) {
+						let roles = rs.data;//所有的角色
+						//角色容器
+						let rolesContent = $("#allRoles");
+						let header = '<div class="layui-form-item"><div class="layui-input-inline" style="width: 250px">'
+						let footer = '</div></div>';
+						let content = "";
+						//循环拼接 所有的角色
+						for(let i=0;i<roles.length;i++){//2条  3条
+							let role = roles[i];
+							let id = role.id;
+							let name = role.name;
+							//第一次循环 拼接头
+							if (i%2==0){
+								content = content +header;
+							}
+							let body = '<input id="checkbox'+id+'" type="checkbox" name="roleId"  value="'+id+'" title="'+name+'" lay-skin="primary" />';
+							content = content + body;
+							if (i%2==1){
+								content = content +footer;
+							}
+						}
+						//奇数没有拼接尾
+						if (roles.length%2 != 0){
+							content = content +footer;
+						}
+						console.log(rs.data);
+						rolesContent.append(content);
+
+						//获取已有的角色
+						$.post("/role/userRoles.do",{userId:rowData.id},function (rs){
+							let userRoles=rs.data;
+							if(userRoles){
+								for(role of userRoles){
+									//将选中的id给输入框，设置为已经选中
+									let id = role.id;
+									let checkboxId ="checkbox"+id;
+									$("#"+checkboxId).prop("checked",true);
+
+								}
+
+							}
+							form.render("checkbox");
+						})
+
+
+					})
+						form.render("checkbox");
+						form.on("submit(subBtnFilter)",function (d){
+						//获取选中的复选框
+						let checkedBox=$("#allRoles :checked");
+						let roleIds=new Array();
+						//将选择的roleid放入roleId数组中去
+						$.each(checkedBox,function (index,obj){
+							let roleId= $(obj).val();
+							roleIds.push("roleId="+roleId);
+
+
+						})
+						console.log(roleIds);
+						let userId=rowData.id;//获取用户id
+						let userRoleIds=roleIds.join("&");
+						console.log(userRoleIds);
+						$.post("/role/setRole.do?userId="+userId+"&"+userRoleIds,function (rs){
+
+							layer.msg(rs.msg);//展示业务消息
+							if(rs.code !=200){
+								return false;
+
+							}
+							layer.close(index);//关闭弹层
+							//刷新表格
+							$("#searchBtn").click();
+
+						})
+
+						return false;
+					});
+
+				},
+				btn:['确认','取消'],
+				btnAlign:"c",
+				yes: function (index,layero){
+					//点击隐藏的提交按钮，触发表单的提交监听
+					$("#subBtn1").click();
+
+
+				}
+
+
+			};
+
+
+			layer.open(layOps);
+
+		}
+		//
+	//	图片显示
+	//	url头像的路径
+
+
+		window.showUserImg =function (url){
+			let imgData={
+				"title": "头像",
+				"start":0,
+				"data":[
+					{
+						"alt":"图片图片",
+						"pid":666,
+						"src":"/images/"+url,
+						"thumb":url
+
+					}
+				]
+			}
+			layer.photos({
+				photos:imgData
+
+			});
+
+		}
+
+		//设置用户角色
+
+	})
+
+
+</script >
+
+</body>
+</html>
